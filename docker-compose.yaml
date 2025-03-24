@@ -1,0 +1,50 @@
+services:
+  db:
+    container_name: db
+    restart: unless-stopped
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: bornalecker
+    volumes:
+      - db-data:/var/lib/postgresql/data
+  backend:
+    container_name: backend
+    restart: unless-stopped
+    image: bornalecker/backend:latest
+    build: backend/.
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/bornalecker
+  frontend:
+    container_name: frontend
+    restart: unless-stopped
+    image: bornalecker/frontend:latest
+    build: frontend/.
+    depends_on:
+      - backend
+  caddy:
+    container_name: caddy
+    restart: unless-stopped
+    image: caddy:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - frontend
+      - backend
+
+volumes:
+  db-data:
+  caddy-data:
+  caddy-config:
+
+
+networks:
+  default:

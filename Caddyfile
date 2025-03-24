@@ -1,0 +1,9 @@
+:80 {
+    handle_path /api/* {
+        reverse_proxy backend:8090
+    }
+
+    handle_path /* {
+        reverse_proxy frontend:80
+    }
+}

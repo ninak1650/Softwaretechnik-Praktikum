@@ -1,0 +1,41 @@
+@startuml Klassendiagramm
+
+    class Kunde{
+        int kunde_nr [PK]
+        String kunde_name
+        String kunde_bereich 
+        int gruppe_nr [FK]
+    }
+
+    class Gruppe{
+        int gruppe_nr [PK]
+        String gruppe_gruppenname
+        String vertretung_benutzername [FK]
+    }
+    class Account{
+        String account_benutzername [PK]
+        String account_nachname
+        String account_passwort
+        String account_initialpasswort
+        String account_rolle 
+        String account_bereich
+        int gruppe_nr [FK]
+    }
+
+    class Bestellung{
+        serial int bestellung_id [PK]
+        date bestelleung_datum
+        int bestellung_essenswahl
+        bool abholstatus
+        int kunde_nr [FK]
+        String account_benutzername [FK]
+    }
+
+Account "1" -- "0..1" Gruppe: Gruppenleitung >
+Account "1" -- "0..n" Gruppe: Vertretung >
+
+Bestellung "0..n" -- "1" Kunde 
+Bestellung "0..n" -- "1" Account
+Gruppe "1" -- "1..n" Kunde
+
+@enduml

@@ -1,0 +1,36 @@
+
+@startuml use-case
+left to right direction
+skinparam packageStyle rectangle
+actor Verwaltung as V
+actor Standortleitung as S
+actor Gruppenleitung as G
+actor Küchenpersonal as K
+rectangle "Bor'na Lecker" {
+  (Accountverwaltung) as AV
+  (CSV Import EÄ) as EÄCSV
+  (Manuelle Verwaltung EÄ) as EÄM
+  (Gesamtansicht) as GA
+  (Standortübersicht) as SÜ
+  (Vertretungsverwaltung) as VW
+  (Gruppenübersicht) as GÜ
+  (Bestellungsaufnahme) as BA
+  (Bestellungsänderung) as BÄ
+
+  (Lesen und Abhaken der Bestellung) as AUSGABE
+  (Manuelle Statusänderung d.B.) as AUSGABE2
+
+}
+
+V -- GA
+V -- AV
+V -- EÄCSV
+V -- EÄM
+S -- SÜ
+S -- VW
+G -- GÜ
+G -- BA
+G -- BÄ
+K -- AUSGABE
+K -- AUSGABE2
+@enduml
